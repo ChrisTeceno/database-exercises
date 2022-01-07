@@ -30,8 +30,8 @@ FROM employees
 WHERE last_name LIKE 'E%' and last_name LIKE '%E'
 ORDER BY emp_no;
 -- 899 results
--- Ramzi Erde
--- Tadahiro Erde
+-- 10021 Ramzi Erde
+-- 499648 Tadahiro Erde
 
 -- Write a query to to find all employees whose last name starts and ends with 'E'. Sort the results by their hire date, so that the newest employees are listed first. Enter a comment with the number of employees returned, the name of the newest employee, and the name of the oldest employee.
 Select *
