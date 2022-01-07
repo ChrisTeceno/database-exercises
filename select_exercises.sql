@@ -19,14 +19,14 @@ FROM albums;
 #Write queries to find the following information:
 
 #a. The name of all albums by Pink Floyd
-SELECT *
+SELECT name
 FROM albums
-WHERE artist = "Pink floyd";
+WHERE artist = 'Pink floyd';
 
 #b. The year Sgt. Pepper's Lonely Hearts Club Band was released
 SELECT release_date
 FROM albums
-WHERE name like "Sgt. Pepper%";
+WHERE name like 'Sgt. Pepper%';
 
 #c. The genre for the album Nevermind
 SELECT genre
@@ -34,18 +34,18 @@ FROM albums
 WHERE name = 'Nevermind';
 
 #d. Which albums were released in the 1990s BETWEEN FUNCTION IS INCLUSIVE
-SELECT *
+SELECT name
 FROM albums
 WHERE release_date BETWEEN 1990 and 1999;
 
 #e. Which albums had less than 20 million certified sales
-SELECT *
+SELECT name
 FROM albums
 WHERE sales < 20;
 
 #f. All the albums with a genre of "Rock". Why do these query results not include albums with a genre of "Hard rock" or "Progressive rock"?
-SELECT *
+SELECT name
 FROM albums
-WHERE genre like "%Rock%";
+WHERE genre like '%Rock%';
 #LIKE MUST BE USED INSTEAD OF "="
 
