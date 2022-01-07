@@ -48,4 +48,3 @@ SELECT name
 FROM albums
 WHERE genre like '%Rock%';
 #LIKE MUST BE USED INSTEAD OF "="
-
