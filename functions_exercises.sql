@@ -23,7 +23,8 @@ SELECT MAX(salary) as largest_salary, MIN(salary) as smallest_salary from salari
 SELECT LOWER(CONCAT (SUBSTR(first_name,1,1), SUBSTR(last_name,1,4), '_', SUBSTR(birth_date,6,2), SUBSTR(birth_date,3,20)) as username;
 
 SELECT LOWER(CONCAT(SUBSTR(first_name,1,1), SUBSTR(last_name,1,4),'_', SUBSTR(birth_date,6,2), SUBSTR(birth_date,3,2))) as username, first_name, last_name, birth_date
-FROM employees;
+FROM employees
+LIMIT 10;
 /*
 +------------+------------+-----------+------------+
 | username   | first_name | last_name | birth_date |
