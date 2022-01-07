@@ -14,3 +14,4 @@ SHOW CREATE TABLE dept_manager;
 
 -- What is the relationship between the employees and the departments tables?
 -- employeees and there department relationship are stored in dept-emp table and new entries can be added for dept changes
+
