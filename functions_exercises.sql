@@ -1,23 +1,23 @@
 -- 1. Copy the order by exercise and save it as functions_exercises.sql.
 
 -- 2. Write a query to to find all employees whose last name starts and ends with 'E'. Use concat() to combine their first and last name together as a single column named full_name.
-SELECT CONCAT (first_name, ' ', last_name) as full_name
+SELECT CONCAT (first_name, ' ', last_name) AS full_name
 FROM employees
-WHERE last_name like 'E%E';
+WHERE last_name LIKE 'E%E';
 
 
 -- 3. Convert the names produced in your last query to all uppercase.
-SELECT UPPER(CONCAT (first_name, ' ', last_name)) as full_name
+SELECT UPPER(CONCAT (first_name, ' ', last_name)) AS full_name
 FROM employees
-WHERE last_name like 'E%E';
+WHERE last_name LIKE 'E%E';
 
 -- 4. Find all employees hired in the 90s and born on Christmas. Use datediff() function to find how many days they have been working at the company (Hint: You will also need to use NOW() or CURDATE()),
-SELECT *, DATEDIFF(CURDATE(), hire_date) as days_worked
+SELECT *, DATEDIFF(CURDATE(), hire_date) AS days_worked
 FROM employees
-WHERE hire_date like '199%-%-%' AND birth_date like '%-12-25';
+WHERE hire_date LIKE '199%-%-%' AND birth_date like '%-12-25';
 
 -- 5. Find the smallest and largest current salary from the salaries table.
-SELECT MAX(salary) as largest_salary, MIN(salary) as smallest_salary 
+SELECT MAX(salary) AS largest_salary, MIN(salary) AS smallest_salary 
 FROM salaries;
 
 
