@@ -42,24 +42,85 @@ GROUP BY last_name;
 SELECT first_name, gender, COUNT(*)
 FROM employees
 WHERE first_name IN ('Irena', 'Vidya', 'Maya')
-GROUP BY first_name, gender;
+GROUP BY first_name, gender
+ORDER BY first_name DESC;
 /**
-Vidya	M	151	151
-Vidya	F	81	81
-Maya	M	146	146
-Maya	F	90	90
-Irena	M	144	144
-Irena	F	97	97
+Vidya	M	151	
+Vidya	F	81	
+Maya	M	146	
+Maya	F	90
+Irena	M	144
+Irena	F	97
 **/
 
 -- 8. Using your query that generates a username for all of the employees, generate a count employees for each unique username. Are there any duplicate usernames? BONUS: How many duplicate usernames are there?
 
-SELECT LOWER(CONCAT(SUBSTR(first_name,1,1), SUBSTR(last_name,1,4),'_', SUBSTR(birth_date,6,2), SUBSTR(birth_date,3,2))) as username, 
+SELECT LOWER(CONCAT(SUBSTR(first_name,1,1), SUBSTR(last_name,1,4),'_', SUBSTR(birth_date,6,2), SUBSTR(birth_date,3,2))) AS username, 
 COUNT(*) AS n_same_username
 FROM employees
 GROUP BY username
-HAVING n_same_username > 1;
--- 13251 usernames duplicated
+HAVING n_same_username >1;
+-- 300024 total users
+-- 285872 unique usernames
+-- 13251 duplicate usernames***
+-- 272621 users with unique usernames 
+-- 27403 users with duplicates
+
+-- automate counts for total_users and unique_usernames
+SELECT COUNT(username) AS total_users,
+	COUNT(DISTINCT username) AS unique_usernames,
+	1 as id
+FROM (SELECT LOWER(CONCAT(SUBSTR(first_name,1,1), SUBSTR(last_name,1,4),'_', SUBSTR(birth_date,6,2), SUBSTR(birth_date,3,2))) as username
+FROM employees) AS t1;
+
+
+-- automate counts for duplicate usernames and users_with_duplicates
+SELECT COUNT(t.username) AS dup_usernames,
+	SUM(t.n_same_username) AS users_with_duplicates, 
+	1 as id
+FROM (SELECT LOWER(CONCAT(SUBSTR(first_name,1,1), SUBSTR(last_name,1,4),'_', SUBSTR(birth_date,6,2), SUBSTR(birth_date,3,2))) AS username, 
+COUNT(*) AS n_same_username
+FROM employees
+GROUP BY username
+HAVING n_same_username >1) AS t2;
+
+
+
+-- testing trying to combine above two queries
+WITH table_one AS(
+SELECT LOWER(
+	CONCAT(
+	SUBSTR(first_name,1,1), 
+	SUBSTR(last_name,1,4),
+	'_',
+	SUBSTR(birth_date,6,2),
+	SUBSTR(birth_date,3,2)
+	)
+	) as username
+FROM employees),
+table_two AS(
+SELECT LOWER(
+	CONCAT(
+	SUBSTR(first_name,1,1), 
+	SUBSTR(last_name,1,4),
+	'_',
+	SUBSTR(birth_date,6,2),
+	SUBSTR(birth_date,3,2)
+	)
+	) as username2,
+	COUNT(*) AS n_same_username
+FROM employees
+GROUP BY username2
+HAVING n_same_username >1
+)
+SELECT 
+COUNT(table_one.username) AS total_users,
+COUNT(DISTINCT table_one.username) AS unique_usernames,
+COUNT(table_two.username2) AS dup_usernames,
+SUM(table_two.n_same_username) AS users_with_duplicates
+FROM table_one, table_two;
+
+
 
 -- 9. More practice with aggregate functions:
 
@@ -69,14 +130,16 @@ FROM salaries
 GROUP BY emp_no;
 
 -- b. Using the dept_emp table, count how many current employees work in each department. The query result should show 9 rows, one for each department and the employee count.
-SELECT COUNT(dept_no) AS n_employees, dept_no
+SELECT dept_no, COUNT(dept_no) AS n_employees
 FROM dept_emp
+WHERE to_date > NOW()
 GROUP BY dept_no;
 
 -- c. Determine how many different salaries each employee has had. This includes both historic and current.
 SELECT emp_no, COUNT(*) AS n_salaries
 FROM salaries
 GROUP BY emp_no;
+
 -- d. Find the maximum salary for each employee.
 SELECT emp_no, MAX(salary) AS max_salaries
 FROM salaries
