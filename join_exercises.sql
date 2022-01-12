@@ -228,7 +228,7 @@ JOIN departments AS d
   ON d.dept_no = de.dept_no
 JOIN salaries as s
   ON s.emp_no = de.emp_no
-WHERE de.to_date = '9999-01-01' and s.to_date = '9999-01-01'
+WHERE de.to_date = '9999-01-01' AND s.to_date = '9999-01-01'
 GROUP BY d.dept_name
 ORDER BY average_salary DESC;
 
@@ -257,27 +257,6 @@ ORDER BY average_salary DESC;
 +--------------------+----------------+*/
 
 -- Bonus Find the names of all current employees, their department name, and their current manager's name. 
-
-SELECT CONCAT(e.first_name, ' ', e.last_name) AS 'Employee Name', d.dept_name AS 'Department Name', t.manager AS 'Manager Name'
-FROM employees AS e
-JOIN dept_manager AS dm
-  ON dm.emp_no = e.emp_no
-JOIN departments AS d
-  ON d.dept_no = dm.dept_no
-Join salaries AS s
-  ON e.emp_no = s.emp_no	
-JOIN(
-SELECT dm.dept_no, e.emp_no, CONCAT(e.first_name, ' ', e.last_name) AS manager
-FROM employees AS e
-JOIN dept_manager AS dm
-  ON dm.emp_no = e.emp_no
-JOIN departments AS d
-  ON d.dept_no = dm.dept_no
-WHERE dm.to_date = '9999-01-01') as t
-  ON d.dept_no = t.dept_no
--- WHERE dm.to_date = '9999-01-01'
-GROUP BY e.emp_no;
-
 SELECT CONCAT(e.first_name, ' ', e.last_name) AS 'Employee Name', d.dept_name AS 'Department Name', CONCAT(m.first_name, ' ', m.last_name) AS 'Manager Name'
 FROM employees AS m
 JOIN dept_manager AS dm
@@ -288,7 +267,7 @@ JOIN dept_emp AS de
   ON de.dept_no = d.dept_no
 JOIN employees AS e
   ON de.emp_no = e.emp_no
-WHERE de.to_date = '9999-01-01' and dm.to_date = '9999-01-01';
+WHERE de.to_date = '9999-01-01' AND dm.to_date = '9999-01-01';
 /*
 240,124 Rows
 
@@ -299,9 +278,6 @@ Employee Name | Department Name  |  Manager Name
  ..... */
  
 -- Bonus Who is the highest paid employee within each department. 
-
-
-
 SELECT d.dept_name AS 'department',
 	CONCAT(e.first_name, ' ', e.last_name) AS 'employee',
 	s.salary AS 'salary'
@@ -313,7 +289,7 @@ JOIN employees AS e
 JOIN salaries AS s
   ON e.emp_no = s.emp_no
 WHERE s.to_date = '9999-01-01'
-AND (s.salary, d.dept_name)
+AND (d.dept_name, s.salary)
 IN
 (
 SELECT d.dept_name, MAX(s.salary)
