@@ -1,8 +1,10 @@
 -- Create a file named subqueries_exercises.sql and craft queries to return the results for the following criteria:
 
 -- Find all the current employees with the same hire date as employee 101010 using a sub-query.
-SELECT emp_no, hire_date, CONCAT(first_name, ' ', last_name) AS employee
-FROM employees
+SELECT e.emp_no, hire_date, CONCAT(first_name, ' ', last_name) AS employee
+FROM employees e
+JOIN dept_emp de
+ON e.emp_no = de.emp_no AND de.to_date > CURDATE()
 WHERE hire_date = (SELECT hire_date FROM employees WHERE emp_no = 101010);
 
 -- Find all the titles ever held by all current employees with the first name Aamod.
@@ -10,6 +12,8 @@ SELECT title
 FROM titles t
 JOIN employees e
 USING (emp_no)
+JOIN dept_emp de
+ON e.emp_no = de.emp_no AND de.to_date > CURDATE()
 WHERE e.first_name = 'Aamod'
 GROUP BY title
 ORDER BY title;
@@ -34,7 +38,7 @@ FROM dept_emp
 GROUP BY emp_no
 )AS t
 WHERE last_date != '9999-01-01';
--- 59900 fired, 240124 remain
+-- 59900 fired, 240124 
 
 
 -- Find all the current department managers that are female. List their names in a comment in your code.
