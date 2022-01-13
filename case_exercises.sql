@@ -1,7 +1,7 @@
 -- Create a file named case_exercises.sql and craft queries to return the results for the following criteria:
 
 -- WRITE a QUERY that RETURNS ALL employees (emp_no), their department number, their START DATE, their END DATE, AND a NEW COLUMN 'is_current_employee' that IS a 1 IF the employee IS still WITH the company AND 0 IF not.
-SELECT emp_no, min(from_date) AS start_date, max(to_date) AS end_date, 
+SELECT emp_no, min(from_date) AS start_date, max(to_date) AS end_date, max(dept_no) as dept_no, 
 IF (max(to_date)= '9999-01-01', TRUE, FALSE) AS is_current_employee
 FROM dept_emp
 GROUP BY emp_no;
