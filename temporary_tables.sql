@@ -8,6 +8,7 @@ SELECT emp_no, first_name, last_name, dept_no, dept_name
 FROM employees
 JOIN dept_emp USING(emp_no)
 JOIN departments USING(dept_no)
+WHERE to_date = '9999-01-01'
 LIMIT 100;
 
 USE innis_1662;
@@ -41,7 +42,7 @@ FROM payment
 LIMIT 100;
 
 -- move to my db
-USE innis_1662;
+USE innis_1662;g
 
 -- view table
 SELECT * FROM payment_with_int;

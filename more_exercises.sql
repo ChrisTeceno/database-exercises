@@ -235,6 +235,7 @@ SELECT cat.name, sum(p.amount)
 		LIMIT 5;
 
 -- What is the average replacement cost of a film? Does this change depending on the rating of the film?
+SELECT AVG(replacement_cost) FROM film;
 
 
 -- +-----------------------+
@@ -243,6 +244,7 @@ SELECT cat.name, sum(p.amount)
 -- |             19.984000 |
 -- +-----------------------+
 -- 1 row in set (2.39 sec)
+SELECT AVG(replacement_cost) FROM film GROUP BY rating;
 
 -- +--------+-----------------------+
 -- | rating | AVG(replacement_cost) |
@@ -256,6 +258,9 @@ SELECT cat.name, sum(p.amount)
 -- 5 rows in set (0.09 sec)
 
 -- How many different films of each genre are in the database?
+SELECT c.name AS 'name', count(film_id) AS 'count' 
+FROM category c JOIN film_category USING (category_id) JOIN film USING (film_id) 
+GROUP BY c.name;
 
 
 -- +-------------+-------+
@@ -281,7 +286,7 @@ SELECT cat.name, sum(p.amount)
 -- 16 rows in set (0.06 sec)
 
 -- What are the 5 frequently rented films?
-
+SELECT from where 
 
 -- +---------------------+-------+
 -- | title               | total |
